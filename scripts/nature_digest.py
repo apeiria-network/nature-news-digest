@@ -7,7 +7,7 @@ Usage:
     python3 nature_digest.py --output-dir D:/nature-news-digest-sounds --tts --tts-engine edge-tts
 
 Outputs:
-    - Nature_Article{N}_English.mp3   (English TTS audio per article, if --tts)
+    - Nature_News{N}_English.mp3   (English TTS audio per news, if --tts)
 
 TTS runtime:
     - Reuse the skill-local .venv first
@@ -54,7 +54,7 @@ def resolve_default_output_dir() -> str:
 
 
 def clean_text_for_tts(text: str) -> str:
-    """Clean article text for TTS: remove markdown formatting, credit lines, etc."""
+    """Clean news text for TTS: remove markdown formatting, credit lines, etc."""
     # Remove markdown bold/italic
     text = re.sub(r'\*{1,2}(.*?)\*{1,2}', r'\1', text)
     # Remove markdown links
@@ -153,7 +153,7 @@ def generate_tts_audio(text: str, output_path: str, lang: str = 'en',
     Priority: gTTS -> edge-tts
 
     Args:
-        text: Article text to convert
+        text: News text to convert
         output_path: Output MP3 file path
         lang: Language code ('en', 'zh-CN', etc.)
         engine: 'auto' | 'gtts' | 'edge-tts'
@@ -195,7 +195,7 @@ def generate_tts_audio(text: str, output_path: str, lang: str = 'en',
 
 def main():
     parser = argparse.ArgumentParser(description='Nature News Digest TTS Helper')
-    parser.add_argument('--top', type=int, default=3, help='Number of top articles to process')
+    parser.add_argument('--top', type=int, default=3, help='Number of top news to process')
     parser.add_argument('--output-dir', type=str, default=resolve_default_output_dir(),
                         help='Output directory (default: prefer D:/nature-news-digest-sounds, fallback to C:/nature-news-digest-sounds)')
     parser.add_argument('--tts', action='store_true', help='Generate TTS audio files')
@@ -206,7 +206,7 @@ def main():
     args = parser.parse_args()
 
     print("Nature News Digest TTS Helper")
-    print(f"  Top articles: {args.top}")
+    print(f"  Top news: {args.top}")
     print(f"  Output dir: {args.output_dir}")
     print(f"  TTS: {args.tts}")
     print(f"  TTS engine: {args.tts_engine}")
