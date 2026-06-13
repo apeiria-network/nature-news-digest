@@ -6,7 +6,7 @@ agent_created: true
 
 # Nature News Text
 
-Provide a full-text Nature news reading experience built around a reusable top-10 shortlist.
+Provide a full-text Nature news reading experience built around a top-10 shortlist that can be reused when it still fits the user's request.
 
 ## When to Use
 

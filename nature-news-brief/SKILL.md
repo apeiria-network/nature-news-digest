@@ -1,6 +1,6 @@
 ---
 name: nature-news-brief
-description: Provide a summary-first Nature news briefing skill. Fetch or reuse the latest top Nature news shortlist, then present up to 10 ranked English summaries with optional Chinese notes. Use when the user wants Nature news summaries, a short reading digest, or `/nature-news-brief`.
+description: Provide a summary-first Nature news briefing skill. First check whether an existing shortlist cache fits the user's current request, then either reuse that shortlist or retrieve a fresh one. Present up to 10 ranked English summaries with optional Chinese notes. Use when the user wants Nature news summaries, a short reading digest, or `/nature-news-brief`.
 agent_created: true
 ---
 
@@ -18,7 +18,9 @@ Provide a summary-first Nature news briefing experience built around a reusable 
 ## Command
 
 ### `/nature-news-brief [user requirements]`
-- Output summary-stage results for the shared shortlist
+- First check whether an existing shortlist cache from a recent run already fits the user's current request
+- Reuse the cached shortlist when it is still a good match; otherwise do a fresh retrieval
+- Output summary-stage results for up to 10 ranked Nature news items
 - Each summary should be about **75-100 words**
 - The summary is generated from fetched English news text or other usable summary-stage source text
 
@@ -31,23 +33,21 @@ Examples:
 - `/nature-news-brief cancer biology, keep terminology, also add Chinese key points`
 - `/nature-news-brief choose space-related news, suitable for reading practice`
 
-The command name controls the output mode. The trailing text controls customization.
+Use the trailing text to customize topic, difficulty, tone, terminology, and output details.
 
-## Shared Retrieval Reference
+## Retrieval and Cache Guide
 
-Use the shared retrieval logic in [search_guide.md](../references/search_guide.md).
+Use [search_guide.md](references/search_guide.md) for:
+- latest Nature news discovery
+- top-10 shortlist ranking rules
+- structured summary-cache management
+- retry behavior
+- cache-fit checks and reuse decisions
+- notes for skipped items, paywalls, and fetch failures
 
-That shared guide covers:
-- Latest Nature news discovery
-- Top-10 shortlist ranking rules
-- Structured summary-cache management
-- Retry behavior
-- Cache reuse policy
-- Shared notes for skipped items, paywalls, and fetch failures
+## Output Rules
 
-## Output Rules for `brief`
-
-For the shared top-10 shortlist:
+For the selected shortlist batch:
 - Output `News {N}: {English Title}`
 - Include `Publication Date: {Date in English}` when available
 - Include `Source: {URL}`
@@ -55,11 +55,11 @@ For the shared top-10 shortlist:
 - If the user asks for Chinese support, add Chinese notes or key points as an extra section
 - Do not output the full English text unless the user explicitly asks
 
-`brief` should both:
-- save the structured top-10 summary shortlist to cache through the shared retrieval flow
-- send the summary text of the shortlist directly to the user in the conversation
+This skill should both:
+- save the structured top-10 summary shortlist to cache
+- send the summary text directly to the user in the conversation
 
-`brief` does not require a selection step by default. It is the summary-oriented view of the shared shortlist.
+`nature-news-brief` does not require a selection step by default. It is the summary-oriented view of the current shortlist.
 
 ## Output Template
 
@@ -81,10 +81,11 @@ Summary
 1. Deliver the summary text result directly in the conversation
 2. Do not write the text result to a markdown file
 3. Present up to **10** shortlisted news summaries in ranking order
-4. Follow the shared retrieval guide for batch freshness, skipped items, paywall notes, and fetch-failure notes
-5. Preserve the user's trailing text requirements for possible later mode switches
+4. Briefly say whether the shortlist was reused from cache or freshly retrieved
+5. Note any skipped items, paywall limitations, or fetch failures
+6. Preserve the user's trailing text requirements when they matter for later cache-fit decisions
 
 ## Error Handling
 
-- Follow the shared retrieval guide for retrieval-related failures
+- Follow [search_guide.md](references/search_guide.md) for retrieval-related failures
 - If the user asks for Chinese support, add Chinese notes or key points as an extra section after the English summary
