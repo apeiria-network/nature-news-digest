@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Nature News Digest - TTS Helper
+Nature News Text - TTS Helper
 
 Usage:
     python3 nature_digest.py --output-dir D:/nature-news-digest-sounds --tts
@@ -9,12 +9,7 @@ Usage:
 Outputs:
     - Nature_News{N}_English.mp3   (English TTS audio per news, if --tts)
 
-TTS runtime:
-    - Reuse the skill-local .venv first
-    - Create .venv under the skill root if needed
-    - Install missing runtime dependencies only into that .venv
-
-TTS Engines:
+TTS engines:
     - gTTS (default): Google TTS, requires internet access to Google servers
     - edge-tts (fallback): Microsoft Edge TTS, works in China without VPN
 """
@@ -24,8 +19,6 @@ import subprocess
 import sys
 import re
 from pathlib import Path
-
-from local_venv import ensure_local_venv
 
 
 DEFAULT_OUTPUT_DIRS = [
@@ -161,9 +154,7 @@ def generate_tts_audio(text: str, output_path: str, lang: str = 'en',
     Returns:
         (success: bool, engine_used: str)
     """
-    skill_root = Path(__file__).resolve().parents[1]
-    env_info = ensure_local_venv(skill_root, skill_root / 'requirements.txt')
-    python_path = env_info['python_path']
+    python_path = sys.executable
 
     if engine == 'edge-tts':
         success = generate_tts_edge(text, output_path, lang, python_path=python_path)

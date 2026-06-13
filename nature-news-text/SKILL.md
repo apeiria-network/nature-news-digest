@@ -1,6 +1,6 @@
 ---
 name: nature-news-text
-description: Provide a full-text Nature news reading skill. Fetch or reuse the latest top Nature news shortlist, present summary previews first, then deliver the full original English text only for the news numbers the user selects. Use when the user wants full news text, English reading practice, or `/nature-news-text`.
+description: Provide a full-text Nature news reading skill. First check whether an existing shortlist cache fits the user's current request, then either reuse that shortlist or retrieve a fresh one. Show summary previews first, wait for the user to choose news numbers, and then deliver the full original English text only for the selected news items. Use when the user wants full news text, English reading practice, or `/nature-news-text`.
 agent_created: true
 ---
 
@@ -18,8 +18,11 @@ Provide a full-text Nature news reading experience built around a top-10 shortli
 ## Command
 
 ### `/nature-news-text [user requirements]`
-- First present the shared top-10 news shortlist as summaries
-- Then output the **full original English text** only for the news item(s) the user selects
+- First check whether the latest shortlist cache already fits the user's current request
+- Reuse the cached shortlist when it is still a good match; otherwise do a fresh retrieval
+- Present up to 10 ranked shortlist summaries first
+- Ask the user to choose one or more news numbers and wait for the reply
+- Output the **full original English text** only for the selected news item(s)
 - Do not replace the selected news text with a summary unless the user explicitly asks
 
 ## User Requirements After the Command
@@ -31,28 +34,27 @@ Examples:
 - `/nature-news-text climate topic, keep the original wording`
 - `/nature-news-text choose space-related news, suitable for reading practice`
 
-The command name controls the output mode. The trailing text controls customization.
+Use the trailing text to customize topic, difficulty, tone, terminology, and output details.
 
-## Shared Retrieval Reference
+## Retrieval and Cache Guide
 
-Use the shared retrieval logic in [search_guide.md](../references/search_guide.md).
+Use [search_guide.md](references/search_guide.md) for:
+- latest Nature news discovery
+- top-10 shortlist ranking rules
+- structured shortlist-cache management
+- retry behavior
+- cache-fit checks and reuse decisions
+- notes for skipped items, paywalls, and fetch failures
 
-That shared guide covers:
-- Latest Nature news discovery
-- Top-10 shortlist ranking rules
-- Structured summary-cache management
-- Retry behavior
-- Cache reuse policy
-- Shared notes for skipped items, paywalls, and fetch failures
+## Interaction Flow
 
-## Interaction Flow for `text`
-
-1. Retrieve or reuse the shared top-10 summary shortlist
-2. Present the top-10 summary text to the user in ranking order
-3. Ask the user to choose one or more news item numbers, and wait until user provides an answer
-4. Fetch or reuse the **full original English text** only for the selected news item(s)
-5. Output the selected full English text
-6. If the user asks for Chinese support, add it after each selected English original text
+1. Check whether the latest shortlist cache fits the current request
+2. Reuse the cached shortlist if it fits; otherwise retrieve a fresh shortlist
+3. Present the shortlist summaries to the user in ranking order
+4. Ask the user to choose one or more news numbers, then wait for the reply
+5. Fetch or reuse the **full original English text** only for the selected news item(s)
+6. Output the selected full English text
+7. If the user asks for Chinese support, add it after each selected English text
 
 ## Shortlist Output Template
 
@@ -69,7 +71,7 @@ Summary
 {Chinese key points / Chinese explanation only if the user asked for them}
 ```
 
-## Selected Article Output Template
+## Selected News Output Template
 
 ```text
 News {N}: {English Title}
@@ -86,13 +88,15 @@ Full English Text
 
 ## Present Results
 
-1. Deliver the shortlist summary text directly in the conversation before news-item selection
-2. After the user selects news item numbers, deliver the selected full-text result directly in the conversation
+1. Deliver the shortlist summary text directly in the conversation before news selection
+2. After the user selects news numbers, deliver the selected full-text result directly in the conversation
 3. Do not write the text result to a markdown file
-4. Follow the shared retrieval guide for batch freshness, skipped items, paywall notes, and fetch-failure notes
-5. Preserve the user's trailing text requirements for possible later mode switches
+4. Briefly say whether the shortlist was reused from cache or freshly retrieved
+5. Note any skipped items, paywall limitations, or fetch failures
+6. Apply the user's trailing requirements consistently when ranking the shortlist and presenting selected full text
 
 ## Error Handling
 
-- Follow the shared retrieval guide for retrieval-related failures
+- Follow [search_guide.md](references/search_guide.md) for retrieval-related failures
 - If the user asks for both full text and extra annotations, keep the original English text as the primary output and place extra annotations after it
+
