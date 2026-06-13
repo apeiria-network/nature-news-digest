@@ -41,16 +41,16 @@ The cache should store:
 - batch timestamp
 - listing URL
 - trailing user requirements when relevant
-- article count
-- a top-10 `articles` list
+- new count
+- a top-10 `news` list
 
-Each cached article entry must include:
+Each cached new entry must include:
 - `title`
 - `date`
 - `summary`
 - `url`
 
-Each cached article entry may also include optional supporting fields such as:
+Each cached new entry may also include optional supporting fields such as:
 - `author`
 - `description`
 - optional Chinese summary / notes
@@ -58,7 +58,7 @@ Each cached article entry may also include optional supporting fields such as:
 
 Cache helper responsibilities:
 - [scripts/summary_cache.py](../scripts/summary_cache.py) only reads and writes the structured cache
-- Invalid article entries should be filtered out if they do not contain the required `title`, `date`, `summary`, and `url` fields
+- Invalid new entries should be filtered out if they do not contain the required `title`, `date`, `summary`, and `url` fields
 - The cache helper must not decide whether a batch should be reused or refreshed
 
 ## Cache Reuse Rules
@@ -79,7 +79,7 @@ For each shortlisted news page:
 - Keep metadata when available, including title, URL, author, and date
 - If a page is partially paywalled, extract all freely visible text and keep a note about the limitation
 
-For selected articles in later steps:
+For selected news in later steps:
 - `text` and `sound` modes may fetch or reuse the **full original English text** only after the user selects one or more shortlist entries
 
 ## Shared Result Presentation Notes

@@ -1,6 +1,6 @@
 ---
 name: nature-news-sound
-description: Provide a listen-and-read Nature news skill. Fetch or reuse the latest top Nature news shortlist, present summary previews first, then deliver the full original English text and English mp3 audio only for the article numbers the user selects. Use when the user wants Nature news listening practice, article audio narration, or `/nature-news-sound`.
+description: Provide a listen-and-read Nature news skill. Fetch or reuse the latest top Nature news shortlist, present summary previews first, then deliver the full original English text and English mp3 audio only for the news numbers the user selects. Use when the user wants Nature news listening practice, news audio narration, or `/nature-news-sound`.
 agent_created: true
 ---
 
@@ -11,16 +11,16 @@ Provide a listen-and-read Nature news experience built around a reusable top-10 
 ## When to Use
 
 - User wants English listening practice from recent Nature news
-- User wants `.mp3` audio narration for selected Nature news articles
-- User wants to preview a shortlist before choosing which article to hear and read
+- User wants `.mp3` audio narration for selected Nature news items
+- User wants to preview a shortlist before choosing which news item to hear and read
 - User uses `/nature-news-sound`
 
 ## Command
 
 ### `/nature-news-sound [user requirements]`
 - First present the shared top-10 news shortlist as summaries
-- Then output the **full original English text** only for the article(s) the user selects
-- Generate and send **English full-text audio** only for the selected article(s)
+- Then output the **full original English text** only for the news item(s) the user selects
+- Generate and send **English full-text audio** only for the selected news item(s)
 
 ## User Requirements After the Command
 
@@ -52,10 +52,10 @@ The shared guides cover:
 
 1. Retrieve or reuse the shared top-10 summary shortlist
 2. Present the top-10 summary text to the user in ranking order
-3. Ask the user to choose one or more article numbers, and wait until user provides an answer
-4. Fetch or reuse the **full original English text** only for the selected article(s)
+3. Ask the user to choose one or more news item numbers, and wait until user provides an answer
+4. Fetch or reuse the **full original English text** only for the selected news item(s)
 5. Output the selected full English text
-6. Generate English full-text audio only for the selected article(s)
+6. Generate English full-text audio only for the selected news item(s)
 7. If the user asks for Chinese support, add it after each selected English original text
 
 ## Shortlist Output Template
@@ -103,9 +103,9 @@ For each selected news item in `sound`:
 
 ## Present Results
 
-1. Deliver the shortlist summary text directly in the conversation before article selection
-2. After the user selects article numbers, deliver the selected full-text result directly in the conversation
-3. For `sound`, send newly generated audio for the selected article(s) as `.mp3` files
+1. Deliver the shortlist summary text directly in the conversation before news-item selection
+2. After the user selects news item numbers, deliver the selected full-text result directly in the conversation
+3. For `sound`, send newly generated audio for the selected news item(s) as `.mp3` files
 4. Do not write the text result to a markdown file
 5. If file delivery fails, tell the user the current saved path of each generated audio file
 6. Follow the shared retrieval guide for batch freshness, skipped items, paywall notes, and fetch-failure notes

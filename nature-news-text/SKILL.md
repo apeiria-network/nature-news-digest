@@ -1,6 +1,6 @@
 ---
 name: nature-news-text
-description: Provide a full-text Nature news reading skill. Fetch or reuse the latest top Nature news shortlist, present summary previews first, then deliver the full original English text only for the article numbers the user selects. Use when the user wants full article text, English reading practice, or `/nature-news-text`.
+description: Provide a full-text Nature news reading skill. Fetch or reuse the latest top Nature news shortlist, present summary previews first, then deliver the full original English text only for the news numbers the user selects. Use when the user wants full news text, English reading practice, or `/nature-news-text`.
 agent_created: true
 ---
 
@@ -11,15 +11,15 @@ Provide a full-text Nature news reading experience built around a reusable top-1
 ## When to Use
 
 - User wants the full original English text of recent Nature news
-- User wants English reading practice with complete articles instead of summaries only
-- User wants to preview a shortlist before choosing which article to read
+- User wants English reading practice with complete news items instead of summaries only
+- User wants to preview a shortlist before choosing which news item to read
 - User uses `/nature-news-text`
 
 ## Command
 
 ### `/nature-news-text [user requirements]`
 - First present the shared top-10 news shortlist as summaries
-- Then output the **full original English text** only for the article(s) the user selects
+- Then output the **full original English text** only for the news item(s) the user selects
 - Do not replace the selected news text with a summary unless the user explicitly asks
 
 ## User Requirements After the Command
@@ -49,8 +49,8 @@ That shared guide covers:
 
 1. Retrieve or reuse the shared top-10 summary shortlist
 2. Present the top-10 summary text to the user in ranking order
-3. Ask the user to choose one or more article numbers, and wait until user provides an answer
-4. Fetch or reuse the **full original English text** only for the selected article(s)
+3. Ask the user to choose one or more news item numbers, and wait until user provides an answer
+4. Fetch or reuse the **full original English text** only for the selected news item(s)
 5. Output the selected full English text
 6. If the user asks for Chinese support, add it after each selected English original text
 
@@ -86,8 +86,8 @@ Full English Text
 
 ## Present Results
 
-1. Deliver the shortlist summary text directly in the conversation before article selection
-2. After the user selects article numbers, deliver the selected full-text result directly in the conversation
+1. Deliver the shortlist summary text directly in the conversation before news-item selection
+2. After the user selects news item numbers, deliver the selected full-text result directly in the conversation
 3. Do not write the text result to a markdown file
 4. Follow the shared retrieval guide for batch freshness, skipped items, paywall notes, and fetch-failure notes
 5. Preserve the user's trailing text requirements for possible later mode switches

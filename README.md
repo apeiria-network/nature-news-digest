@@ -29,8 +29,8 @@
 
 特点：
 - 先展示 shortlist 摘要预览
-- 等待用户选择文章编号
-- 仅对所选文章输出完整英文原文
+- 等待用户选择新闻编号
+- 仅对所选新闻输出完整英文原文
 - 可按用户要求附加中文说明
 
 入口文件：
@@ -41,8 +41,8 @@
 
 特点：
 - 先展示 shortlist 摘要预览
-- 等待用户选择文章编号
-- 输出所选文章完整英文原文
+- 等待用户选择新闻编号
+- 输出所选新闻完整英文原文
 - 生成并交付英文 `.mp3` 音频
 - 在 gTTS 不可用时自动回退到 edge-tts
 
@@ -108,7 +108,7 @@ TTS 辅助脚本，负责：
 ### [scripts/summary_cache.py](scripts/summary_cache.py)
 shortlist 缓存读写辅助脚本，负责：
 - 读取最新缓存批次
-- 过滤无效 article 条目
+- 过滤无效 new 条目
 - 写入规范化后的缓存结构
 
 ### [scripts/local_venv.py](scripts/local_venv.py)
@@ -150,9 +150,9 @@ python -m venv .venv
 用于保存最近一次共享 shortlist 批次，便于在 `brief / text / sound` 之间复用。
 
 ### 音频文件
-- `Nature_Article{N}_English.mp3`
+- `Nature_News{N}_English.mp3`
 
-用于保存 `nature-news-sound` 生成的英文文章音频。
+用于保存 `nature-news-sound` 生成的英文新闻音频。
 
 默认优先输出到：
 - `D:/nature-news-digest-sounds`

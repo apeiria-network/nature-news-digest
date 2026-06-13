@@ -12,7 +12,7 @@ Provide a summary-first Nature news briefing experience built around a reusable 
 
 - User asks for Nature news summaries or a short digest
 - User wants brief English reading practice from recent Nature news
-- User wants a ranked shortlist instead of full article text
+- User wants a ranked shortlist instead of full news text
 - User uses `/nature-news-brief`
 
 ## Command
