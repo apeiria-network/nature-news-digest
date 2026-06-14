@@ -25,7 +25,7 @@ source scripts/.venv/bin/activate
 pip install -r scripts/requirements.txt
 
 # Run the script through the local runtime
-python scripts/nature_digest.py
+python scripts/nature_news_digest.py
 ```
 
 Use these shell-style steps as a manual setup or troubleshooting reference. The runtime helper remains the main enforcement mechanism during normal TTS execution.
@@ -85,7 +85,7 @@ asyncio.run(generate(cleaned_text, 'output.mp3'))
 ### Using the Unified Interface
 
 ```python
-from scripts.nature_digest import generate_tts_audio
+from scripts.nature_news_digest import generate_tts_audio
 
 # Auto mode: gTTS -> edge-tts fallback
 success, engine = generate_tts_audio(text, 'output.mp3', lang='en', engine='auto')

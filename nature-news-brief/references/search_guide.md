@@ -52,7 +52,6 @@ Each cached news entry may also include optional supporting fields such as:
 - `author`
 - `description`
 - optional Chinese summary / notes
-- optional later enrichment such as full text or audio path
 
 Cache helper responsibilities:
 - [scripts/summary_cache.py](../scripts/summary_cache.py) only reads and writes the structured cache

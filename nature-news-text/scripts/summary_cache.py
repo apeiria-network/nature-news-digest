@@ -4,7 +4,30 @@
 import json
 from pathlib import Path
 
-from nature_digest import resolve_default_output_dir
+
+DEFAULT_OUTPUT_DIRS = [
+    Path('D:/nature-news-digest-sounds'),
+    Path('C:/nature-news-digest-sounds'),
+]
+
+
+def resolve_default_output_dir() -> str:
+    """Return the preferred writable output directory, creating it if needed."""
+    for candidate in DEFAULT_OUTPUT_DIRS:
+        drive_root = candidate.drive + '/'
+        if candidate.drive and not Path(drive_root).exists():
+            continue
+        try:
+            candidate.mkdir(parents=True, exist_ok=True)
+            test_file = candidate / '.write_test.tmp'
+            test_file.write_text('ok', encoding='utf-8')
+            test_file.unlink()
+            return str(candidate)
+        except OSError:
+            continue
+    fallback = DEFAULT_OUTPUT_DIRS[-1]
+    fallback.mkdir(parents=True, exist_ok=True)
+    return str(fallback)
 
 
 CACHE_FILENAME = 'Nature_LatestBatch_Cache.json'

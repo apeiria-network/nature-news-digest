@@ -4,7 +4,7 @@
 import json
 from pathlib import Path
 
-from nature_digest import resolve_default_output_dir
+from nature_news_digest import resolve_default_output_dir
 
 
 CACHE_FILENAME = 'Nature_LatestBatch_Cache.json'
