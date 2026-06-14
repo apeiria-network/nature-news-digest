@@ -5,9 +5,30 @@ This reference is for English TTS generation used by the `nature-news-sound` ski
 ## TTS Guidelines
 
 ### Local Python Environment
-- Use a working local Python runtime that already has the required audio dependencies when available.
-- If the current runtime is missing required dependencies, install them into that same runtime before generating audio.
-- Keep the audio-generation setup local to the current working runtime, and avoid changing unrelated Python environments.
+- Audio generation for `nature-news-sound` uses the local Python runtime under `scripts/.venv`.
+- If `scripts/.venv` does not exist yet, create it before generating audio.
+- If the local runtime is missing required dependencies, install them into that same `scripts/.venv`.
+- Reuse the same local runtime throughout the audio step, and avoid changing unrelated Python environments.
+- Preferred Python range for this skill is **3.10-3.13**.
+- The helper also allows **3.14** when available, but **3.10-3.13** is the more reliable range to use by default.
+
+### Typical Setup Steps
+
+```sh
+# Create the local runtime under scripts/
+python3 -m venv scripts/.venv
+
+# Activate the local runtime
+source scripts/.venv/bin/activate
+
+# Install sound dependencies into the local runtime
+pip install -r scripts/requirements.txt
+
+# Run the script through the local runtime
+python scripts/nature_digest.py
+```
+
+Use these shell-style steps as a manual setup or troubleshooting reference. The runtime helper remains the main enforcement mechanism during normal TTS execution.
 
 ### Text Preparation for TTS
 1. Remove markdown formatting (*, **, #, etc.)
@@ -75,6 +96,6 @@ success, engine = generate_tts_audio(text, 'output.mp3', lang='en', engine='gtts
 ```
 
 - `generate_tts_audio(...)` prepares the text and tries gTTS first, then edge-tts if needed
-- It uses the current working Python runtime for audio generation
-- Reuse the same working runtime throughout the audio step whenever possible
+- It ensures the local runtime under `scripts/.venv` is ready before audio generation starts
+- It runs audio generation through the Python interpreter inside that local runtime
 

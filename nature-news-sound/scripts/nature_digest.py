@@ -9,6 +9,12 @@ Usage:
 Outputs:
     - Nature_News{N}_English.mp3   (English TTS audio per news, if --tts)
 
+TTS runtime:
+    - Reuse scripts/.venv under the sound skill when it is available and valid
+    - Create scripts/.venv under the sound skill if it does not exist yet
+    - Install missing runtime dependencies into that same scripts/.venv
+    - Run TTS through the Python interpreter inside scripts/.venv
+
 TTS engines:
     - gTTS (default): Google TTS, requires internet access to Google servers
     - edge-tts (fallback): Microsoft Edge TTS, works in China without VPN
@@ -19,6 +25,8 @@ import subprocess
 import sys
 import re
 from pathlib import Path
+
+from local_venv import ensure_local_venv
 
 
 DEFAULT_OUTPUT_DIRS = [
@@ -154,7 +162,9 @@ def generate_tts_audio(text: str, output_path: str, lang: str = 'en',
     Returns:
         (success: bool, engine_used: str)
     """
-    python_path = sys.executable
+    runtime_root = Path(__file__).resolve().parent
+    env_info = ensure_local_venv(runtime_root, runtime_root / 'requirements.txt')
+    python_path = env_info['python_path']
 
     if engine == 'edge-tts':
         success = generate_tts_edge(text, output_path, lang, python_path=python_path)

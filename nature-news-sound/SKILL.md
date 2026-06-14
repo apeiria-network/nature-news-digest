@@ -48,6 +48,8 @@ Use [search_guide.md](references/search_guide.md) for:
 
 Use [TTS_guide.md](references/TTS_guide.md) for:
 - text preparation for TTS
+- the local runtime under `scripts/.venv`
+- Python version guidance for the sound runtime
 - audio-generation guidance
 - engine fallback behavior
 
