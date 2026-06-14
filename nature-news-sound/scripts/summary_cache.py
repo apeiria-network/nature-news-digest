@@ -77,6 +77,7 @@ def save_summary_cache(batch: dict, output_dir: str | None = None) -> str | None
     normalized.setdefault('user_requirements', '')
     normalized['article_count'] = len(normalized_articles)
     cache_path = get_summary_cache_path(output_dir)
+    print(f"Using storage [project-claude-dir]: {cache_path}")
     try:
         cache_path.write_text(json.dumps(normalized, ensure_ascii=False, indent=2), encoding='utf-8')
     except OSError:

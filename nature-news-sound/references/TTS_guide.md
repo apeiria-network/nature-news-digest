@@ -25,10 +25,15 @@ source scripts/.venv/bin/activate
 pip install -r scripts/requirements.txt
 
 # Run the script through the local runtime
-python scripts/nature_news_digest.py
+python scripts/nature_news_digest.py --output-dir .claude/nature-news-walkman
 ```
 
 Use these shell-style steps as a manual setup or troubleshooting reference. The runtime helper remains the main enforcement mechanism during normal TTS execution.
+
+### Storage Directory
+- The default project storage directory for generated audio and shortlist cache is `.claude/nature-news-walkman/` under the project root.
+- Before saving shortlist cache, the workflow should tell the user which storage path will be used.
+- If audio file delivery fails, tell the user the current saved file path under that directory so the file can be retrieved manually.
 
 ### Text Preparation for TTS
 1. Remove markdown formatting (*, **, #, etc.)

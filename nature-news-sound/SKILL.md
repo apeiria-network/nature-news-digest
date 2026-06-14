@@ -45,6 +45,7 @@ Use [search_guide.md](references/search_guide.md) for:
 - retry behavior
 - cache-fit checks and reuse decisions
 - notes for skipped items, paywalls, and fetch failures
+- the default project storage directory `.claude/nature-news-walkman/`
 
 Use [TTS_guide.md](references/TTS_guide.md) for:
 - text preparation for TTS

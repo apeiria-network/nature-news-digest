@@ -34,6 +34,8 @@ If the user gives a topic or style preference, balance that preference with the 
 ## Cache Management
 
 Use `Nature_LatestBatch_Cache.json` as the structured cache for an existing shortlist cache from a recent run.
+The default cache storage directory is `.claude/nature-news-walkman/` under the project root.
+Before saving the cache, the workflow should tell the user which storage path will be used.
 
 The cache should store:
 - batch timestamp

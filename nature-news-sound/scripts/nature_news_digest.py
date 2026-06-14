@@ -3,8 +3,8 @@
 Nature News Sound - TTS Helper
 
 Usage:
-    python3 nature_digest.py --output-dir D:/nature-news-digest-sounds --tts
-    python3 nature_digest.py --output-dir D:/nature-news-digest-sounds --tts --tts-engine edge-tts
+    python3 nature_news_digest.py --output-dir .claude/nature-news-walkman --tts
+    python3 nature_news_digest.py --output-dir .claude/nature-news-walkman --tts --tts-engine edge-tts
 
 Outputs:
     - Nature_News{N}_English.mp3   (English TTS audio per news, if --tts)
@@ -29,29 +29,22 @@ from pathlib import Path
 from local_venv import ensure_local_venv
 
 
-DEFAULT_OUTPUT_DIRS = [
-    Path('D:/nature-news-digest-sounds'),
-    Path('C:/nature-news-digest-sounds'),
-]
+DEFAULT_OUTPUT_SUBDIR = Path('.claude/nature-news-walkman')
 
 
 def resolve_default_output_dir() -> str:
-    """Return the preferred writable output directory, creating it if needed."""
-    for candidate in DEFAULT_OUTPUT_DIRS:
-        drive_root = candidate.drive + '/'
-        if candidate.drive and not Path(drive_root).exists():
-            continue
-        try:
-            candidate.mkdir(parents=True, exist_ok=True)
-            test_file = candidate / '.write_test.tmp'
-            test_file.write_text('ok', encoding='utf-8')
-            test_file.unlink()
-            return str(candidate)
-        except OSError:
-            continue
-    fallback = DEFAULT_OUTPUT_DIRS[-1]
-    fallback.mkdir(parents=True, exist_ok=True)
-    return str(fallback)
+    """Return the default writable project storage directory, creating it if needed."""
+    project_root = Path(__file__).resolve().parents[2]
+    candidate = project_root / DEFAULT_OUTPUT_SUBDIR
+    try:
+        candidate.mkdir(parents=True, exist_ok=True)
+        test_file = candidate / '.write_test.tmp'
+        test_file.write_text('ok', encoding='utf-8')
+        test_file.unlink()
+        return str(candidate)
+    except OSError:
+        candidate.mkdir(parents=True, exist_ok=True)
+        return str(candidate)
 
 
 def clean_text_for_tts(text: str) -> str:
@@ -198,7 +191,7 @@ def main():
     parser = argparse.ArgumentParser(description='Nature News Digest TTS Helper')
     parser.add_argument('--top', type=int, default=3, help='Number of top news to process')
     parser.add_argument('--output-dir', type=str, default=resolve_default_output_dir(),
-                        help='Output directory (default: prefer D:/nature-news-digest-sounds, fallback to C:/nature-news-digest-sounds)')
+                        help='Output directory (default: .claude/nature-news-walkman)')
     parser.add_argument('--tts', action='store_true', help='Generate TTS audio files')
     parser.add_argument('--tts-engine', type=str, default='auto',
                         choices=['auto', 'gtts', 'edge-tts'],
